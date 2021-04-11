@@ -140,8 +140,14 @@ public class YedDoc extends GraphmlDoc {
 
         String nodeId = "n" + nodeCounter++;
 
+        Element geometry = document.createElement("y:Geometry");
+        geometry.setAttribute("width", String.valueOf(nodeType.getWidth()));
+        geometry.setAttribute("height", String.valueOf(nodeType.getHeight()));
+
         Element nodeLabel = document.createElement("y:NodeLabel");
         nodeLabel.appendChild(document.createTextNode(label));
+        nodeLabel.setAttribute("width", String.valueOf(nodeType.getWidth()));
+        nodeLabel.setAttribute("height", String.valueOf(nodeType.getHeight()));
         if (fontFamily != null) {
             nodeLabel.setAttribute("fontFamily", fontFamily);
         }
@@ -150,6 +156,26 @@ public class YedDoc extends GraphmlDoc {
         }
         if (fontStyle != null) {
             nodeLabel.setAttribute("fontStyle", fontStyle);
+        }
+        String nodeLabelAutoSizePolicy = nodeType.getAutoSizePolicy().getAutoSizePolicy();
+        if (nodeLabelAutoSizePolicy != null) {
+          nodeLabel.setAttribute("autoSizePolicy", nodeLabelAutoSizePolicy);
+        }
+        String nodeLabelConfiguration = nodeType.getConfiguration().getConfiguration();
+        if (nodeLabelConfiguration != null) {
+          nodeLabel.setAttribute("configuration", nodeLabelConfiguration);
+        }
+        if (nodeType.getLeftInset() != 0) {
+            nodeLabel.setAttribute("leftInset", String.valueOf(nodeType.getLeftInset()));
+        }
+        if (nodeType.getRightInset() != 0) {
+            nodeLabel.setAttribute("rightInset", String.valueOf(nodeType.getRightInset()));
+        }
+        if (nodeType.getTopInset() != 0) {
+            nodeLabel.setAttribute("topInset", String.valueOf(nodeType.getTopInset()));
+        }
+        if (nodeType.getBottomInset() != 0) {
+            nodeLabel.setAttribute("bottomInset", String.valueOf(nodeType.getBottomInset()));
         }
 
         Element fill = document.createElement("y:Fill");
@@ -160,6 +186,7 @@ public class YedDoc extends GraphmlDoc {
         shape.setAttribute("type", nodeType.getShape().toString().toLowerCase());
 
         Element shapeNode = document.createElement("y:ShapeNode");
+        shapeNode.appendChild(geometry);
         shapeNode.appendChild(nodeLabel);
         shapeNode.appendChild(fill);
         shapeNode.appendChild(shape);
