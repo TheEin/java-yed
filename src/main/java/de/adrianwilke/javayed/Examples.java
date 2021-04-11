@@ -51,11 +51,11 @@ public class Examples {
 		yedDoc.setFontStyle("bold");
 
 		// Create nodes of different types
-		int hero = 0;
+		NodeType hero = new NodeType(Color.ORANGE);
 		String s = yedDoc.createNode("Superman", hero);
 		String b = yedDoc.createNode("Batman", hero);
 		String h = yedDoc.createNode("Harley Quinn", hero);
-		int robot = 1;
+		NodeType robot = new NodeType(Color.YELLOW);
 		String r = yedDoc.createNode("Robocob", robot);
 		String t = yedDoc.createNode("T-1000 ", robot);
 

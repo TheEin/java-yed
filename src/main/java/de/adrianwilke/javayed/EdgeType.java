@@ -3,7 +3,7 @@ package de.adrianwilke.javayed;
 /**
  * Sets color based on ID.
  * 
- * Uses colors in {@link Colors} and {@link Colors#getColor(int)}.
+ * Uses colors in {@link Color} and {@link Color#getColor(int)}.
  *
  * @author Adrian Wilke
  */

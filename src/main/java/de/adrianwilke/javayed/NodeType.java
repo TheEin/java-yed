@@ -2,62 +2,48 @@ package de.adrianwilke.javayed;
 
 /**
  * Sets color based on ID.
- * 
- * Uses colors in {@link Colors} and {@link Colors#getColor(int)}.
+ * <p>
+ * Uses colors in {@link Color} and {@link Color#getColor(int)}.
  *
  * @author Adrian Wilke
  */
 public class NodeType {
 
-	public final static String DEFAULT_COLOR = "#ffffff";
+    public static final NodeType DEFAULT = new NodeType();
 
-	protected String color;
+    private Color color = Color.WHITE;
 
-	public NodeType(Integer id) {
-		if (id == null) {
-			color = DEFAULT_COLOR;
-		} else {
-			color = computeColor(id);
-		}
-	}
+    private Shape shape = Shape.RECTANGLE;
 
-	public String getColor() {
-		return color;
-	}
+    public NodeType() {
+    }
 
-	protected static String computeColor(int number) {
+    public NodeType(Color color) {
+        this.color = color;
+    }
 
-		// yEd colors
+    public NodeType(Shape shape) {
+        this.shape = shape;
+    }
 
-		switch (number) {
-		case 0:
-			return Colors.ORANGE;
-		case 1:
-			return Colors.YELLOW;
-		case 2:
-			return Colors.GREEN;
-		case 3:
-			return Colors.BLUE;
-		case 4:
-			return Colors.PURPLE;
-		default:
-			break;
-		}
+    public NodeType(Color color, Shape shape) {
+        this.color = color;
+        this.shape = shape;
+    }
 
-		// Computed gray
-		// Range: [255, 1]
-		// 5 -> 255 (number 5 not predefined)
-		int code = 255 + 5 - number;
-		if (code > 0) {
-			String hex = Integer.toHexString(code);
-			if (code < 10) {
-				hex = "0" + hex;
-			}
-			return "#" + hex + hex + hex;
-		}
+    public Color getColor() {
+        return color;
+    }
 
-		// Default color
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
-		return DEFAULT_COLOR;
-	}
+    public Shape getShape() {
+        return shape;
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
 }

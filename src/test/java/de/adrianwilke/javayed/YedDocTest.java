@@ -30,15 +30,15 @@ public class YedDocTest {
 		YedDoc yedDoc = new YedDoc().initialize();
 
 		String nodeA = yedDoc.createNode("a simple node");
-		String nodeB = yedDoc.createNode("b type 0", 0);
-		String nodeC = yedDoc.createNode("c type 1", 1);
-		String nodeD = yedDoc.createNode("d type 2", 2);
-		String nodeE = yedDoc.createNode("e type 3", 3);
-		String nodeF = yedDoc.createNode("f type 4", 4);
-		String nodeG = yedDoc.createNode("g type 5", 5);
-		String nodeH = yedDoc.createNode("h type 6 computed color", 6);
-		yedDoc.createNode("type 100 computed color", 100);
-		yedDoc.createNode("type 1000 computed default color", 1000);
+		String nodeB = yedDoc.createNode("b type 0", new NodeType(Color.ORANGE));
+		String nodeC = yedDoc.createNode("c type 1", new NodeType(Color.YELLOW));
+		String nodeD = yedDoc.createNode("d type 2", new NodeType(Color.GREEN));
+		String nodeE = yedDoc.createNode("e type 3", new NodeType(Color.BLUE));
+		String nodeF = yedDoc.createNode("f type 4", new NodeType(Color.PURPLE));
+		String nodeG = yedDoc.createNode("g type 5", new NodeType(Color.RED));
+		String nodeH = yedDoc.createNode("h type 6 computed color", new NodeType(Color.CYAN));
+		yedDoc.createNode("type 100 computed color", new NodeType(Color.MAGENTA));
+		yedDoc.createNode("type 1000 computed default color", new NodeType(Color.MAGENTA));
 
 		yedDoc.createEdge(nodeA, nodeB);
 		yedDoc.createEdge(nodeA, nodeB, "a to b no type", null);
