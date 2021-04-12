@@ -28,4 +28,17 @@
 
 	</dependencies>
 
+	<distributionManagement>
+		<repository>
+			<id>biarum</id>
+			<name>biarum-releases</name>
+			<url>http://artifactory.biarum.com/artifactory/corporate</url>
+		</repository>
+		<snapshotRepository>
+			<id>biarum</id>
+			<name>biarum-snapshots</name>
+			<url>http://artifactory.biarum.com/artifactory/corporate</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
