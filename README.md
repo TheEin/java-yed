@@ -14,7 +14,7 @@ This is a yEd graph file generator written in Java. It allows to create:
 
 Example code is available in the following files:
 
-- [Examples.java](src/main/java/de/adrianwilke/javayed/Examples.java)
+- [Examples.java](src/main/java/com/haystac/javayed/Examples.java)
 - [YedDocTest.java](src/test/java/de/adrianwilke/javayed/YedDocTest.java)
 - [IoTest.java](src/test/java/de/adrianwilke/javayed/IoTest.java)
 
@@ -92,51 +92,3 @@ Io.write(yedDoc.getDocument(), file);
 - Customize the elements according to your taste
 
 You can also use yEd Live at https://www.yworks.com/yed-live/
-
-## Usage
-
-Download the latest
-[release](https://github.com/adibaba/java-yed/releases)
-or current
-[code](https://github.com/adibaba/java-yed/archive/master.zip).
-
-### Usage of Maven and GitHub Packages
-
-Add the following lines to your pom.xml:
-
-```xml
-<dependencies>
-	<!-- https://github.com/adibaba/java-yed -->
-	<dependency>
-		<groupId>de.adrianwilke</groupId>
-		<artifactId>java-yed</artifactId>
-		<version>(0,1]</version>
-	</dependency>
-</dependencies>
-
-[...]
-
-<distributionManagement>
-	<repository>
-		<id>github-adibaba-java-yed</id>
-		<name>GitHub adibaba java-yed Apache Maven Packages</name>
-		<url>https://maven.pkg.github.com/adibaba/java-yed</url>
-	</repository>
-</distributionManagement>
-```
-
-To use GitHub Packages, you also have to edit your Maven settings.xml and to create a personal access token. A
-description on how to set up the settings.xml is available
-at [GitHub Help: Configuring Apache Maven for use with GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages)
-. Token creation is described
-at [GitHub Help: Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
-.
-
-## Deployment
-
-- Remove "-SNAPSHOT" from version
-- Create a tag, e.g. `git tag -a 0.0.0 -m "0.0.0"`
-- Push the tag: `git push --tags`
-- Create a release from [tags/](https://github.com/adibaba/java-yed/tags)
-- Run mvn install and attach binaries to the release
-- Create new "-SNAPSHOT" version

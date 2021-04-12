@@ -1,4 +1,4 @@
-package de.adrianwilke.javayed;
+package com.haystac.javayed;
 
 /**
  * Provide node attributes

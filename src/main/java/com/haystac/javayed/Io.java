@@ -1,4 +1,4 @@
-package de.adrianwilke.javayed;
+package com.haystac.javayed;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

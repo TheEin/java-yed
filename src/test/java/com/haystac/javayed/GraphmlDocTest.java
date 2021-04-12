@@ -1,4 +1,4 @@
-package de.adrianwilke.javayed;
+package com.haystac.javayed;
 
 import org.junit.Assert;
 import org.junit.Test;
