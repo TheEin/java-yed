@@ -1,17 +1,17 @@
 package de.adrianwilke.javayed;
 
+import org.w3c.dom.Document;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
-
 /**
  * XML document.
- * 
+ * <p>
  * To create an underlying {@link Document}, {@link #createDocument()} can be
  * used.
- * 
+ * <p>
  * The required instances of {@link DocumentBuilderFactory},
  * {@link DocumentBuilder}, and {@link Document} can be modified of sub-classes
  * extending this class.
@@ -20,50 +20,52 @@ import org.w3c.dom.Document;
  */
 public class XmlDoc {
 
-	protected DocumentBuilderFactory documentBuilderFactory;
-	protected DocumentBuilder documentBuilder;
-	protected Document document;
+    protected DocumentBuilderFactory documentBuilderFactory;
 
-	/**
-	 * Creates default {@link DocumentBuilderFactory}.
-	 */
-	public XmlDoc createDocumentBuilderFactory() {
-		documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		return this;
-	}
+    protected DocumentBuilder documentBuilder;
 
-	/**
-	 * Creates default {@link DocumentBuilder}.
-	 */
-	public XmlDoc createDocumentBuilder() {
-		if (documentBuilderFactory == null) {
-			createDocumentBuilderFactory();
-		}
+    protected Document document;
 
-		try {
-			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-		return this;
-	}
+    /**
+     * Creates default {@link DocumentBuilderFactory}.
+     */
+    public XmlDoc createDocumentBuilderFactory() {
+        documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        return this;
+    }
 
-	/**
-	 * Creates default {@link Document}.
-	 */
-	public XmlDoc createDocument() {
-		if (documentBuilder == null) {
-			createDocumentBuilder();
-		}
+    /**
+     * Creates default {@link DocumentBuilder}.
+     */
+    public XmlDoc createDocumentBuilder() {
+        if (documentBuilderFactory == null) {
+            createDocumentBuilderFactory();
+        }
 
-		document = documentBuilder.newDocument();
-		return this;
-	}
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
 
-	/**
-	 * Gets the XML {@link Document}.
-	 */
-	public Document getDocument() {
-		return document;
-	}
+    /**
+     * Creates default {@link Document}.
+     */
+    public XmlDoc createDocument() {
+        if (documentBuilder == null) {
+            createDocumentBuilder();
+        }
+
+        document = documentBuilder.newDocument();
+        return this;
+    }
+
+    /**
+     * Gets the XML {@link Document}.
+     */
+    public Document getDocument() {
+        return document;
+    }
 }

@@ -1,66 +1,67 @@
 package de.adrianwilke.javayed;
 
+import org.w3c.dom.Element;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import org.w3c.dom.Element;
-
 /**
  * GraphML document.
- * 
- * @see http://graphml.graphdrawing.org/specification/xsd.html
  *
  * @author Adrian Wilke
+ * @see http://graphml.graphdrawing.org/specification/xsd.html
  */
 public class GraphmlDoc extends XmlDoc {
 
-	public enum GraphType {
-		DIRECTED, UNDIRECTED
-	}
+    protected Element root;
 
-	protected Element root;
-	protected List<Element> graphs = new LinkedList<>();
+    protected List<Element> graphs = new LinkedList<>();
 
-	/**
-	 * Creates default root element, named "graphml".
-	 */
-	public GraphmlDoc createRoot() {
-		if (document == null) {
-			createDocument();
-		}
+    /**
+     * Creates default root element, named "graphml".
+     */
+    public GraphmlDoc createRoot() {
+        if (document == null) {
+            createDocument();
+        }
 
-		Element element = document.createElement("graphml");
-		document.appendChild(element);
-		
-		root = element;
-		
-		return this;
-	}
+        Element element = document.createElement("graphml");
+        document.appendChild(element);
 
-	/**
-	 * Gets the default root element, named "graphml".
-	 */
-	public Element getRoot() {
-		if (root == null) {
-			createRoot();
-		}
+        root = element;
 
-		return root;
-	}
+        return this;
+    }
 
-	/**
-	 * Appends graph element to root.
-	 */
-	public GraphmlDoc addGraph(GraphType edgedefault) {
-		if (root == null) {
-			createRoot();
-		}
+    /**
+     * Gets the default root element, named "graphml".
+     */
+    public Element getRoot() {
+        if (root == null) {
+            createRoot();
+        }
 
-		Element graph = document.createElement("graph");
-		graph.setAttribute("edgedefault", edgedefault.toString().toLowerCase());
-		root.appendChild(graph);
-		graphs.add(graph);
-		return this;
-	}
+        return root;
+    }
+
+    /**
+     * Appends graph element to root.
+     */
+    public GraphmlDoc addGraph(GraphType edgedefault) {
+        if (root == null) {
+            createRoot();
+        }
+
+        Element graph = document.createElement("graph");
+        graph.setAttribute("edgedefault", edgedefault.toString().toLowerCase());
+        root.appendChild(graph);
+        graphs.add(graph);
+        return this;
+    }
+
+    public enum GraphType {
+        DIRECTED,
+        UNDIRECTED
+    }
 
 }

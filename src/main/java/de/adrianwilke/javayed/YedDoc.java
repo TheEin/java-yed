@@ -159,11 +159,11 @@ public class YedDoc extends GraphmlDoc {
         }
         String nodeLabelAutoSizePolicy = nodeType.getAutoSizePolicy().getAutoSizePolicy();
         if (nodeLabelAutoSizePolicy != null) {
-          nodeLabel.setAttribute("autoSizePolicy", nodeLabelAutoSizePolicy);
+            nodeLabel.setAttribute("autoSizePolicy", nodeLabelAutoSizePolicy);
         }
         String nodeLabelConfiguration = nodeType.getConfiguration().getConfiguration();
         if (nodeLabelConfiguration != null) {
-          nodeLabel.setAttribute("configuration", nodeLabelConfiguration);
+            nodeLabel.setAttribute("configuration", nodeLabelConfiguration);
         }
         if (nodeType.getLeftInset() != 0) {
             nodeLabel.setAttribute("leftInset", String.valueOf(nodeType.getLeftInset()));

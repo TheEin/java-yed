@@ -1,7 +1,6 @@
 # Java yEd
 
-This is a yEd graph file generator written in Java.
-It allows to create:
+This is a yEd graph file generator written in Java. It allows to create:
 
 - Nodes with labels
 - Node types (optional)
@@ -11,15 +10,13 @@ It allows to create:
 
 ![jEd example](doc/example.png)
 
-
 ## Code examples
 
-Example code is available in the following files: 
+Example code is available in the following files:
 
 - [Examples.java](src/main/java/de/adrianwilke/javayed/Examples.java)
 - [YedDocTest.java](src/test/java/de/adrianwilke/javayed/YedDocTest.java)
 - [IoTest.java](src/test/java/de/adrianwilke/javayed/IoTest.java)
-
 
 ### Example A
 
@@ -44,7 +41,6 @@ yedDoc.createEdge(c, a);
 // Write file
 Io.write(yedDoc.getDocument(), file);
 ```
-
 
 ### Example B
 
@@ -86,7 +82,6 @@ yedDoc.createEdge(r, h, unknownLabel, unknown);
 Io.write(yedDoc.getDocument(), file);
 ```
 
-
 ## How to use the yEd Graph Editor
 
 - Download yEd at https://www.yworks.com/products/yed
@@ -98,14 +93,12 @@ Io.write(yedDoc.getDocument(), file);
 
 You can also use yEd Live at https://www.yworks.com/yed-live/
 
-
 ## Usage
 
 Download the latest
 [release](https://github.com/adibaba/java-yed/releases)
 or current
 [code](https://github.com/adibaba/java-yed/archive/master.zip).
-
 
 ### Usage of Maven and GitHub Packages
 
@@ -132,10 +125,12 @@ Add the following lines to your pom.xml:
 </distributionManagement>
 ```
 
-To use GitHub Packages, you also have to edit your Maven settings.xml and to create a personal access token.
-A description on how to set up the settings.xml is available at [GitHub Help: Configuring Apache Maven for use with GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
-Token creation is described at [GitHub Help: Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
-
+To use GitHub Packages, you also have to edit your Maven settings.xml and to create a personal access token. A
+description on how to set up the settings.xml is available
+at [GitHub Help: Configuring Apache Maven for use with GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages)
+. Token creation is described
+at [GitHub Help: Creating a personal access token for the command line](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+.
 
 ## Deployment
 
