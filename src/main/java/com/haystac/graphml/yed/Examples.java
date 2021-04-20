@@ -1,13 +1,11 @@
 package com.haystac.graphml.yed;
 
 import com.haystac.graphml.Color;
-import com.haystac.graphml.Node;
 
 import java.io.File;
 
 /**
  * Examples.
- *
  */
 public class Examples {
 
@@ -32,9 +30,9 @@ public class Examples {
         String c = yedDoc.addNode("Caesar");
 
         // Create edges
-        yedDoc.createEdge(a, b);
-        yedDoc.createEdge(b, c);
-        yedDoc.createEdge(c, a);
+        yedDoc.addEdge(a, b);
+        yedDoc.addEdge(b, c);
+        yedDoc.addEdge(c, a);
 
         // Write file
         Io.write(yedDoc.getDocument(), file);
@@ -62,18 +60,15 @@ public class Examples {
         String t = yedDoc.add(robot.label("T-1000"));
 
         // Create edges of different types
-        int knows = 0;
-        String knowsLabel = "knows";
-        yedDoc.createEdge(s, b, knowsLabel, knows);
-        yedDoc.createEdge(t, s, knowsLabel, knows);
-        int loves = 1;
-        String lovesLabel = "loves";
-        yedDoc.createEdge(s, h, lovesLabel, loves);
-        yedDoc.createEdge(b, h, lovesLabel, loves);
-        yedDoc.createEdge(h, t, lovesLabel, loves);
-        Integer unknown = null;
-        String unknownLabel = null;
-        yedDoc.createEdge(r, h, unknownLabel, unknown);
+        PolyLineEdge knows = new PolyLineEdge().label("knows").color(Color.ORANGE);
+        yedDoc.add(s, b, knows);
+        yedDoc.add(t, s, knows);
+        PolyLineEdge loves = new PolyLineEdge().label("loves").color(Color.GREEN);
+        yedDoc.add(s, h, loves);
+        yedDoc.add(b, h, loves);
+        yedDoc.add(h, t, loves);
+        PolyLineEdge unknown = new PolyLineEdge();
+        yedDoc.add(r, h, unknown);
 
         // Write file
         Io.write(yedDoc.getDocument(), file);

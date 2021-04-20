@@ -26,7 +26,7 @@ public class IoTest {
         }
 
         YedDoc yedDoc = new YedDoc().initialize();
-        yedDoc.createEdge(yedDoc.addNode("a"), yedDoc.addNode("b"));
+        yedDoc.addEdge(yedDoc.addNode("a"), yedDoc.addNode("b"));
         Io.write(yedDoc.getDocument(), file);
 
         Assert.assertTrue("File created", file.exists());
@@ -45,7 +45,7 @@ public class IoTest {
 
         // Write
         YedDoc yedDoc = new YedDoc().initialize();
-        yedDoc.createEdge(yedDoc.addNode("a"), yedDoc.addNode("b"));
+        yedDoc.addEdge(yedDoc.addNode("a"), yedDoc.addNode("b"));
         Io.write(yedDoc.getDocument(), file);
 
         // Read and check graphml element

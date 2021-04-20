@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 public abstract class YedNode<N extends YedNode<N>> extends Node<Document, Element, N> {
 
     @Override
-    protected void append(Document document, Element parent) {
+    public void append(Document document, Element parent) {
         appendGeometry(document, parent);
         appendFill(document, parent);
         appendNodeLabel(document, parent);
@@ -26,35 +26,24 @@ public abstract class YedNode<N extends YedNode<N>> extends Node<Document, Eleme
 
     protected void appendFill(Document document, Element parent) {
         Element fill = document.createElement("y:Fill");
-        fill.setAttribute("color", "#" + getColor().getRgbCode());
+        fill.setAttribute("color", YedDoc.decodeColor(getColor()));
         fill.setAttribute("transparent", "false");
         parent.appendChild(fill);
     }
 
     protected void appendNodeLabel(Document document, Element parent) {
-        if (getLabel() != null) {
+        String label = getLabel();
+        if (label != null) {
             Element nodeLabel = document.createElement("y:NodeLabel");
-            nodeLabel.appendChild(document.createTextNode(getLabel()));
+            nodeLabel.appendChild(document.createTextNode(label));
             nodeLabel.setAttribute("width", String.valueOf(getWidth()));
             nodeLabel.setAttribute("height", String.valueOf(getHeight()));
 
-            setFont(nodeLabel);
+            YedDoc.setFont(nodeLabel, this);
             setAutoSize(nodeLabel);
             setInsets(nodeLabel);
 
             parent.appendChild(nodeLabel);
-        }
-    }
-
-    protected void setFont(Element nodeLabel) {
-        if (getFontFamily() != null) {
-            nodeLabel.setAttribute("fontFamily", getFontFamily());
-        }
-        if (getFontSize() != -1) {
-            nodeLabel.setAttribute("fontSize", String.valueOf(getFontSize()));
-        }
-        if (getFontStyle() != null) {
-            nodeLabel.setAttribute("fontStyle", getFontStyle());
         }
     }
 
@@ -94,17 +83,21 @@ public abstract class YedNode<N extends YedNode<N>> extends Node<Document, Eleme
     }
 
     protected void setInsets(Element nodeLabel) {
-        if (getLeftInset() != 0) {
-            nodeLabel.setAttribute("leftInset", String.valueOf(getLeftInset()));
+        int leftInset = getLeftInset();
+        if (leftInset != 0) {
+            nodeLabel.setAttribute("leftInset", String.valueOf(leftInset));
         }
-        if (getRightInset() != 0) {
-            nodeLabel.setAttribute("rightInset", String.valueOf(getRightInset()));
+        int rightInset = getRightInset();
+        if (rightInset != 0) {
+            nodeLabel.setAttribute("rightInset", String.valueOf(rightInset));
         }
-        if (getTopInset() != 0) {
-            nodeLabel.setAttribute("topInset", String.valueOf(getTopInset()));
+        int topInset = getTopInset();
+        if (topInset != 0) {
+            nodeLabel.setAttribute("topInset", String.valueOf(topInset));
         }
-        if (getBottomInset() != 0) {
-            nodeLabel.setAttribute("bottomInset", String.valueOf(getBottomInset()));
+        int bottomInset = getBottomInset();
+        if (bottomInset != 0) {
+            nodeLabel.setAttribute("bottomInset", String.valueOf(bottomInset));
         }
     }
 

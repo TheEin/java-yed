@@ -1,6 +1,8 @@
 package com.haystac.graphml.yed;
 
+import com.haystac.graphml.Color;
 import com.haystac.graphml.Defaults;
+import com.haystac.graphml.Graphics;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,11 +21,13 @@ import lombok.Setter;
  */
 public class YedDoc extends GraphmlDoc implements Defaults {
 
-    public static final ShapeNode DEFAULT_NODE = new ShapeNode();
-
     public static final String ID_EDGE_GRAPHICS = "d0";
 
     public static final String ID_NODE_GRAPHICS = "d1";
+
+    private static final ShapeNode DEFAULT_NODE = new ShapeNode();
+
+    private static final PolyLineEdge DEFAULT_EDGE = new PolyLineEdge();
 
     protected boolean initialized = false;
 
@@ -43,6 +47,25 @@ public class YedDoc extends GraphmlDoc implements Defaults {
     @Setter
     private String fontStyle;
 
+    static String decodeColor(Color color) {
+        return "#" + color.getRgbCode();
+    }
+
+    static void setFont(Element nodeLabel, Graphics<Document, Element, ?> graphics) {
+        String fontFamily = graphics.getFontFamily();
+        if (fontFamily != null) {
+            nodeLabel.setAttribute("fontFamily", fontFamily);
+        }
+        int fontSize = graphics.getFontSize();
+        if (fontSize != -1) {
+            nodeLabel.setAttribute("fontSize", String.valueOf(fontSize));
+        }
+        String fontStyle = graphics.getFontStyle();
+        if (fontStyle != null) {
+            nodeLabel.setAttribute("fontStyle", fontStyle);
+        }
+    }
+
     /**
      * Initializes document.
      *
@@ -60,6 +83,24 @@ public class YedDoc extends GraphmlDoc implements Defaults {
         return this;
     }
 
+    private <T extends Graphics<Document, Element, ?>> Element createData(T graphics, T def, String keyId) {
+        if (!initialized) {
+            throw new RuntimeException("Not initialized. " + YedDoc.class.getName());
+        }
+        if (graphics == null) {
+            graphics = def;
+        }
+        graphics.setDefaults(this);
+
+        Document document = getDocument();
+
+        Element data = document.createElement("data");
+        data.setAttribute("key", keyId);
+        graphics.append(document, data);
+
+        return data;
+    }
+
     /**
      * Creates edge and returns the related edge ID.
      * <p>
@@ -67,8 +108,8 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      *
      * @throws RuntimeException if not initialized.
      */
-    public String createEdge(String sourceId, String targetId) throws RuntimeException {
-        return createEdge(sourceId, targetId, null, null);
+    public String addEdge(String sourceId, String targetId) throws RuntimeException {
+        return add(sourceId, targetId, DEFAULT_EDGE);
     }
 
     /**
@@ -76,54 +117,19 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      *
      * @throws RuntimeException if not initialized.
      */
-    public String createEdge(String sourceId, String targetId, String label, Integer type) throws RuntimeException {
-        if (!initialized) {
-            throw new RuntimeException("Not initialized. " + YedDoc.class.getName());
-        }
+    public String add(String sourceId, String targetId, YedEdge<?> edge) throws RuntimeException {
+        Element data = createData(edge, DEFAULT_EDGE, ID_EDGE_GRAPHICS);
 
         Document document = getDocument();
 
         String edgeId = "e" + edgeCounter++;
+        Element element = document.createElement("edge");
+        element.setAttribute("id", edgeId);
+        element.setAttribute("source", sourceId);
+        element.setAttribute("target", targetId);
+        element.appendChild(data);
 
-        Element lineStyle = document.createElement("y:LineStyle");
-        lineStyle.setAttribute("color", new EdgeType(type).getColor());
-        lineStyle.setAttribute("type", "line");
-        lineStyle.setAttribute("width", "1.0");
-
-        Element arrows = document.createElement("y:Arrows");
-        arrows.setAttribute("source", "none");
-        arrows.setAttribute("target", "delta");
-
-        Element edgeType = document.createElement("y:PolyLineEdge");
-        edgeType.appendChild(lineStyle);
-        edgeType.appendChild(arrows);
-
-        if (label != null) {
-            Element edgeLabel = document.createElement("y:EdgeLabel");
-            edgeLabel.appendChild(document.createTextNode(label));
-            edgeType.appendChild(edgeLabel);
-            if (fontFamily != null) {
-                edgeLabel.setAttribute("fontFamily", fontFamily);
-            }
-            if (fontSize != -1) {
-                edgeLabel.setAttribute("fontSize", String.valueOf(fontSize));
-            }
-            if (fontStyle != null) {
-                edgeLabel.setAttribute("fontStyle", fontStyle);
-            }
-        }
-
-        Element data = document.createElement("data");
-        data.setAttribute("key", ID_EDGE_GRAPHICS);
-        data.appendChild(edgeType);
-
-        Element edge = document.createElement("edge");
-        edge.setAttribute("id", edgeId);
-        edge.setAttribute("source", sourceId);
-        edge.setAttribute("target", targetId);
-        edge.appendChild(data);
-
-        getDefaultGraph().appendChild(edge);
+        getDefaultGraph().appendChild(element);
 
         return edgeId;
     }
@@ -134,7 +140,7 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      * @throws RuntimeException if not initialized.
      */
     public String addNode(String label) throws RuntimeException {
-        return add(DEFAULT_NODE.defaults(this).label(label));
+        return add(DEFAULT_NODE.label(label));
     }
 
     /**
@@ -143,25 +149,16 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      * @throws RuntimeException if not initialized.
      */
     public String add(YedNode<?> node) throws RuntimeException {
-        if (!initialized) {
-            throw new RuntimeException("Not initialized. " + YedDoc.class.getName());
-        }
-        if (node == null) {
-            node = DEFAULT_NODE;
-        }
+        Element data = createData(node, DEFAULT_NODE, ID_NODE_GRAPHICS);
 
         Document document = getDocument();
 
-        Element data = document.createElement("data");
-        data.setAttribute("key", ID_NODE_GRAPHICS);
-        node.append(document, data);
-
         String nodeId = "n" + nodeCounter++;
-        Element nodeElement = document.createElement("node");
-        nodeElement.setAttribute("id", nodeId);
-        nodeElement.appendChild(data);
+        Element element = document.createElement("node");
+        element.setAttribute("id", nodeId);
+        element.appendChild(data);
 
-        getDefaultGraph().appendChild(nodeElement);
+        getDefaultGraph().appendChild(element);
 
         return nodeId;
     }
@@ -217,5 +214,4 @@ public class YedDoc extends GraphmlDoc implements Defaults {
         nodeGraphics.setAttribute("yfiles.type", "nodegraphics");
         root.appendChild(nodeGraphics);
     }
-
 }

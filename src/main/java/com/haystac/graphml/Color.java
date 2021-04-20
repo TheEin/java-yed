@@ -13,7 +13,8 @@ public enum Color {
     RED("ff0000"),
     CYAN("00FFFF"),
     MAGENTA("FF00FF"),
-    WHITE("ffffff");
+    WHITE("ffffff"),
+    BLACK("000000");
 
     private final String rgbCode;
 

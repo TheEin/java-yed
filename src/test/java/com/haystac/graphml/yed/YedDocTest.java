@@ -1,7 +1,6 @@
 package com.haystac.graphml.yed;
 
 import com.haystac.graphml.Color;
-import com.haystac.graphml.Node;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +13,7 @@ public class YedDocTest {
 
     @Test(expected = RuntimeException.class)
     public void testNotInitializedEdge() {
-        new YedDoc().createEdge("x", "y");
+        new YedDoc().addEdge("x", "y");
     }
 
     @Test(expected = RuntimeException.class)
@@ -43,11 +42,12 @@ public class YedDocTest {
         yedDoc.add(node.label("type 100 computed color").color(Color.MAGENTA));
         yedDoc.add(node.label("type 1000 computed default color").color(Color.MAGENTA));
 
-        yedDoc.createEdge(nodeA, nodeB);
-        yedDoc.createEdge(nodeA, nodeB, "a to b no type", null);
-        yedDoc.createEdge(nodeC, nodeD, null, null);
-        yedDoc.createEdge(nodeE, nodeF, null, 0);
-        yedDoc.createEdge(nodeG, nodeH, "g to h type 1", 1);
+        PolyLineEdge edge = new PolyLineEdge();
+        yedDoc.addEdge(nodeA, nodeB);
+        yedDoc.add(nodeA, nodeB, edge.label("a to b no type"));
+        yedDoc.add(nodeC, nodeD, edge.label(null));
+        yedDoc.add(nodeE, nodeF, edge.color(Color.YELLOW));
+        yedDoc.add(nodeG, nodeH, edge.label("g to h type 1").color(Color.GREEN));
 
         Assert.assertEquals("graphml element exists", "graphml", yedDoc.getRoot().getNodeName());
 
