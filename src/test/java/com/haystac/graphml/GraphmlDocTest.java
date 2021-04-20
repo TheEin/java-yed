@@ -1,4 +1,4 @@
-package com.haystac.graphml.yed;
+package com.haystac.graphml;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class GraphmlDocTest {
 
     @Test
     public void testGraphCreation() {
-        GraphmlDoc graphmlDoc = new GraphmlDoc().addGraph(GraphmlDoc.GraphType.DIRECTED);
+        GraphmlDoc graphmlDoc = new GraphmlDoc().addGraph(EdgeType.DIRECTED);
 
         Assert.assertEquals("Root has one graph", 1, graphmlDoc.getRoot().getChildNodes().getLength());
 

@@ -7,7 +7,6 @@ import org.junit.Test;
 
 /**
  * Tests {@link YedDoc}.
- *
  */
 public class YedDocTest {
 

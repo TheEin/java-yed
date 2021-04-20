@@ -1,4 +1,4 @@
-package com.haystac.graphml.yed;
+package com.haystac.graphml;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 
 /**
  * Tests {@link XmlDoc}.
- *
  */
 public class XmlDocTest {
 

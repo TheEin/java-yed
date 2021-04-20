@@ -2,7 +2,9 @@ package com.haystac.graphml.yed;
 
 import com.haystac.graphml.Color;
 import com.haystac.graphml.Defaults;
+import com.haystac.graphml.EdgeType;
 import com.haystac.graphml.Graphics;
+import com.haystac.graphml.GraphmlDoc;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,13 +23,13 @@ import lombok.Setter;
  */
 public class YedDoc extends GraphmlDoc implements Defaults {
 
-    public static final String ID_EDGE_GRAPHICS = "d0";
+    private static final String ID_EDGE_GRAPHICS = "d0";
 
-    public static final String ID_NODE_GRAPHICS = "d1";
+    private static final String ID_NODE_GRAPHICS = "d1";
 
-    private static final ShapeNode DEFAULT_NODE = new ShapeNode();
+    private static final YedNode<?> DEFAULT_NODE = new ShapeNode();
 
-    private static final PolyLineEdge DEFAULT_EDGE = new PolyLineEdge();
+    private static final YedEdge<?> DEFAULT_EDGE = new PolyLineEdge();
 
     protected boolean initialized = false;
 
@@ -76,7 +78,7 @@ public class YedDoc extends GraphmlDoc implements Defaults {
             throw new RuntimeException("Already initialized. " + YedDoc.class.getName());
         } else {
             createStructure();
-            addGraph(GraphType.DIRECTED);
+            addGraph(EdgeType.DIRECTED);
             initialized = true;
         }
 

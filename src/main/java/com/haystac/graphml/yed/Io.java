@@ -30,14 +30,20 @@ public class Io {
     /**
      * Writes XML document to file.
      */
-    public static void write(Document document, File file) throws IOException, TransformerException {
+    public static void write(
+        Document document,
+        File file
+    ) throws IOException, TransformerException {
         write(document, new FileOutputStream(file));
     }
 
     /**
      * Writes XML document to OutputStream.
      */
-    public static void write(Document document, OutputStream out) throws IOException, TransformerException {
+    public static void write(
+        Document document,
+        OutputStream out
+    ) throws IOException, TransformerException {
         DOMSource domSource = new DOMSource(document);
         StreamResult streamResult = new StreamResult(new OutputStreamWriter(out, StandardCharsets.UTF_8));
 
@@ -51,8 +57,9 @@ public class Io {
     /**
      * Reads XML document from file.
      */
-    public static Document read(File file)
-        throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+    public static Document read(
+        File file
+    ) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();

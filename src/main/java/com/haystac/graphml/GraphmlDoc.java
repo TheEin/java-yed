@@ -1,4 +1,4 @@
-package com.haystac.graphml.yed;
+package com.haystac.graphml;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,6 +19,10 @@ public class GraphmlDoc extends XmlDoc {
     private final List<Element> graphs = new LinkedList<>();
 
     private Element root;
+
+    static String decodeEdgeType(EdgeType edgeType) {
+        return edgeType.toString().toLowerCase();
+    }
 
     /**
      * Creates default root element, named "graphml".
@@ -45,19 +49,13 @@ public class GraphmlDoc extends XmlDoc {
     /**
      * Appends graph element to root.
      */
-    public GraphmlDoc addGraph(GraphType edgedefault) {
+    public GraphmlDoc addGraph(EdgeType edgeType) {
         Document document = getDocument();
         Element element = getRoot();
         Element graph = document.createElement("graph");
-        graph.setAttribute("edgedefault", edgedefault.toString().toLowerCase());
+        graph.setAttribute("edgedefault", decodeEdgeType(edgeType));
         element.appendChild(graph);
         graphs.add(graph);
         return this;
     }
-
-    public enum GraphType {
-        DIRECTED,
-        UNDIRECTED
-    }
-
 }

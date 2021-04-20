@@ -1,8 +1,6 @@
-package com.haystac.graphml.yed;
+package com.haystac.graphml;
 
 import static com.haystac.graphml.Color.BLACK;
-
-import com.haystac.graphml.Graphics;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

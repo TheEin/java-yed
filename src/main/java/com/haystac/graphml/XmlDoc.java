@@ -1,4 +1,4 @@
-package com.haystac.graphml.yed;
+package com.haystac.graphml;
 
 import org.w3c.dom.Document;
 

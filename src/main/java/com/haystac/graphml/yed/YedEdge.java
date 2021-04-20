@@ -1,5 +1,7 @@
 package com.haystac.graphml.yed;
 
+import com.haystac.graphml.Edge;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

@@ -3,11 +3,16 @@ package com.haystac.graphml.yed;
 import com.haystac.graphml.AutoSize;
 import com.haystac.graphml.Configuration;
 import com.haystac.graphml.Node;
+import com.haystac.graphml.Shape;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public abstract class YedNode<N extends YedNode<N>> extends Node<Document, Element, N> {
+
+    static String decodeShape(Shape shape) {
+        return shape.toString().toLowerCase();
+    }
 
     @Override
     public void append(Document document, Element parent) {
@@ -103,7 +108,7 @@ public abstract class YedNode<N extends YedNode<N>> extends Node<Document, Eleme
 
     protected void appendShape(Document document, Element parent) {
         Element shape = document.createElement("y:Shape");
-        shape.setAttribute("type", getShape().toString().toLowerCase());
+        shape.setAttribute("type", decodeShape(getShape()));
         parent.appendChild(shape);
     }
 }

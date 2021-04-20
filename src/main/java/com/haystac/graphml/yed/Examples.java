@@ -60,14 +60,14 @@ public class Examples {
         String t = yedDoc.add(robot.label("T-1000"));
 
         // Create edges of different types
-        PolyLineEdge knows = new PolyLineEdge().label("knows").color(Color.ORANGE);
+        YedEdge<?> knows = new PolyLineEdge().label("knows").color(Color.ORANGE);
         yedDoc.add(s, b, knows);
         yedDoc.add(t, s, knows);
-        PolyLineEdge loves = new PolyLineEdge().label("loves").color(Color.GREEN);
+        YedEdge<?> loves = new PolyLineEdge().label("loves").color(Color.GREEN);
         yedDoc.add(s, h, loves);
         yedDoc.add(b, h, loves);
         yedDoc.add(h, t, loves);
-        PolyLineEdge unknown = new PolyLineEdge();
+        YedEdge<?> unknown = new PolyLineEdge();
         yedDoc.add(r, h, unknown);
 
         // Write file
