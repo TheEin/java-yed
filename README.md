@@ -29,9 +29,9 @@ System.out.println("Example file: " + file.getAbsolutePath());
 YedDoc yedDoc = new YedDoc().initialize();
 
 // Create nodes
-String a = yedDoc.createNode("Adrian");
-String b = yedDoc.createNode("Benjamin");
-String c = yedDoc.createNode("Caesar");
+String a = yedDoc.addNode("Adrian");
+String b = yedDoc.addNode("Benjamin");
+String c = yedDoc.addNode("Caesar");
 
 // Create edges
 yedDoc.createEdge(a, b);
@@ -57,12 +57,12 @@ yedDoc.setFontStyle("bold");
 
 // Create nodes of different types
 int hero = 0;
-String s = yedDoc.createNode("Superman", hero);
-String b = yedDoc.createNode("Batman", hero);
-String h = yedDoc.createNode("Harley Quinn", hero);
+String s = yedDoc.addNode("Superman", hero);
+String b = yedDoc.addNode("Batman", hero);
+String h = yedDoc.addNode("Harley Quinn", hero);
 int robot = 1;
-String r = yedDoc.createNode("Robocob", robot);
-String t = yedDoc.createNode("T-1000 ", robot);
+String r = yedDoc.addNode("Robocob", robot);
+String t = yedDoc.addNode("T-1000 ", robot);
 
 // Create edges of different types
 int knows = 0;

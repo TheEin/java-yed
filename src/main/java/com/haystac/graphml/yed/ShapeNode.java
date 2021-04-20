@@ -8,6 +8,11 @@ import org.w3c.dom.Element;
 public class ShapeNode extends YedNode<ShapeNode> {
 
     @Override
+    protected ShapeNode self() {
+        return this;
+    }
+
+    @Override
     protected void append(Document document, Element parent) {
         Element shapeNode = document.createElement("y:ShapeNode");
 

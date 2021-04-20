@@ -20,7 +20,7 @@ public class YedDocTest {
 
     @Test(expected = RuntimeException.class)
     public void testNotInitializedNode() {
-        new YedDoc().createNode("x");
+        new YedDoc().addNode("x");
     }
 
     @Test(expected = RuntimeException.class)
@@ -32,16 +32,17 @@ public class YedDocTest {
     public void testCreateGraph() {
         YedDoc yedDoc = new YedDoc().initialize();
 
-        String nodeA = yedDoc.createNode("a simple node");
-        String nodeB = yedDoc.createNode("b type 0", new Node().color(Color.ORANGE));
-        String nodeC = yedDoc.createNode("c type 1", new Node().color(Color.YELLOW));
-        String nodeD = yedDoc.createNode("d type 2", new Node().color(Color.GREEN));
-        String nodeE = yedDoc.createNode("e type 3", new Node().color(Color.BLUE));
-        String nodeF = yedDoc.createNode("f type 4", new Node().color(Color.PURPLE));
-        String nodeG = yedDoc.createNode("g type 5", new Node().color(Color.RED));
-        String nodeH = yedDoc.createNode("h type 6 computed color", new Node().color(Color.CYAN));
-        yedDoc.createNode("type 100 computed color", new Node().color(Color.MAGENTA));
-        yedDoc.createNode("type 1000 computed default color", new Node().color(Color.MAGENTA));
+        String nodeA = yedDoc.addNode("a simple node");
+        ShapeNode node = new ShapeNode();
+        String nodeB = yedDoc.add(node.label("b type 0").color(Color.ORANGE));
+        String nodeC = yedDoc.add(node.label("c type 1").color(Color.YELLOW));
+        String nodeD = yedDoc.add(node.label("d type 2").color(Color.GREEN));
+        String nodeE = yedDoc.add(node.label("e type 3").color(Color.BLUE));
+        String nodeF = yedDoc.add(node.label("f type 4").color(Color.PURPLE));
+        String nodeG = yedDoc.add(node.label("g type 5").color(Color.RED));
+        String nodeH = yedDoc.add(node.label("h type 6 computed color").color(Color.CYAN));
+        yedDoc.add(node.label("type 100 computed color").color(Color.MAGENTA));
+        yedDoc.add(node.label("type 1000 computed default color").color(Color.MAGENTA));
 
         yedDoc.createEdge(nodeA, nodeB);
         yedDoc.createEdge(nodeA, nodeB, "a to b no type", null);

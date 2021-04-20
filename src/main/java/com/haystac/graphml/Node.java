@@ -45,9 +45,11 @@ public abstract class Node<D, P, N extends Node<D, P, N>> extends Graphics<D, P>
 
     private int bottomInset;
 
+    protected abstract N self();
+
     public N defaults(Defaults defaults) {
         this.defaults = defaults;
-        return (N) this;
+        return self();
     }
 
     public String getFontFamily() {
@@ -82,59 +84,59 @@ public abstract class Node<D, P, N extends Node<D, P, N>> extends Graphics<D, P>
 
     public N label(String label) {
         this.label = label;
-        return (N) this;
+        return self();
     }
 
-    public Node<D, P, N> fontFamily(String fontFamily) {
+    public N fontFamily(String fontFamily) {
         this.fontFamily = fontFamily;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> fontSize(int fontSize) {
+    public N fontSize(int fontSize) {
         this.fontSize = fontSize;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> fontStyle(String fontStyle) {
+    public N fontStyle(String fontStyle) {
         this.fontStyle = fontStyle;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> width(double width) {
+    public N width(double width) {
         this.width = width;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> height(double height) {
+    public N height(double height) {
         this.height = height;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> color(Color color) {
+    public N color(Color color) {
         this.color = color;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> shape(Shape shape) {
+    public N shape(Shape shape) {
         this.shape = shape;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> autoSize(AutoSize autoSize) {
+    public N autoSize(AutoSize autoSize) {
         this.autoSize = autoSize;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> configuration(Configuration configuration) {
+    public N configuration(Configuration configuration) {
         this.configuration = configuration;
-        return this;
+        return self();
     }
 
-    public Node<D, P, N> insets(int all) {
+    public N insets(int all) {
         leftInset = all;
         rightInset = all;
         topInset = all;
         bottomInset = all;
-        return this;
+        return self();
     }
 }

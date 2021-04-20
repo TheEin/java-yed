@@ -28,9 +28,9 @@ public class Examples {
         YedDoc yedDoc = new YedDoc().initialize();
 
         // Create nodes
-        String a = yedDoc.createNode("Adrian");
-        String b = yedDoc.createNode("Benjamin");
-        String c = yedDoc.createNode("Caesar");
+        String a = yedDoc.addNode("Adrian");
+        String b = yedDoc.addNode("Benjamin");
+        String c = yedDoc.addNode("Caesar");
 
         // Create edges
         yedDoc.createEdge(a, b);
@@ -54,13 +54,13 @@ public class Examples {
         yedDoc.setFontStyle("bold");
 
         // Create nodes of different types
-        Node hero = new Node().color(Color.ORANGE);
-        String s = yedDoc.createNode("Superman", hero);
-        String b = yedDoc.createNode("Batman", hero);
-        String h = yedDoc.createNode("Harley Quinn", hero);
-        Node robot = new Node().color(Color.YELLOW);
-        String r = yedDoc.createNode("Robocob", robot);
-        String t = yedDoc.createNode("T-1000 ", robot);
+        YedNode<?> hero = new ShapeNode().color(Color.ORANGE);
+        String s = yedDoc.add(hero.label("Superman"));
+        String b = yedDoc.add(hero.label("Batman"));
+        String h = yedDoc.add(hero.label("Harley Quinn"));
+        YedNode<?> robot = new ShapeNode().color(Color.YELLOW);
+        String r = yedDoc.add(robot.label("Robocob"));
+        String t = yedDoc.add(robot.label("T-1000"));
 
         // Create edges of different types
         int knows = 0;
