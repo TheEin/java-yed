@@ -8,7 +8,6 @@ import java.io.File;
 /**
  * Examples.
  *
- * @author Adrian Wilke
  */
 public class Examples {
 

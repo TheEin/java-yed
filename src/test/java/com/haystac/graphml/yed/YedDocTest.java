@@ -9,7 +9,6 @@ import org.junit.Test;
 /**
  * Tests {@link YedDoc}.
  *
- * @author Adrian Wilke
  */
 public class YedDocTest {
 

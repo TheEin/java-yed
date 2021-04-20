@@ -1,36 +1,35 @@
 package com.haystac.graphml.yed;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * GraphML document.
  *
- * @author Adrian Wilke
- * @see http://graphml.graphdrawing.org/specification/xsd.html
+ * @see <a href="http://graphml.graphdrawing.org/specification/xsd.html">GraphML Schema Documentation</a>
  */
 public class GraphmlDoc extends XmlDoc {
 
-    protected Element root;
+    @Getter
+    private final List<Element> graphs = new LinkedList<>();
 
-    protected List<Element> graphs = new LinkedList<>();
+    private Element root;
 
     /**
      * Creates default root element, named "graphml".
      */
-    public GraphmlDoc createRoot() {
-        if (document == null) {
-            createDocument();
-        }
+    protected Element createRoot() {
+        Document document = getDocument();
 
         Element element = document.createElement("graphml");
         document.appendChild(element);
 
-        root = element;
-
-        return this;
+        return element;
     }
 
     /**
@@ -38,9 +37,8 @@ public class GraphmlDoc extends XmlDoc {
      */
     public Element getRoot() {
         if (root == null) {
-            createRoot();
+            root = createRoot();
         }
-
         return root;
     }
 
@@ -48,13 +46,11 @@ public class GraphmlDoc extends XmlDoc {
      * Appends graph element to root.
      */
     public GraphmlDoc addGraph(GraphType edgedefault) {
-        if (root == null) {
-            createRoot();
-        }
-
+        Document document = getDocument();
+        Element element = getRoot();
         Element graph = document.createElement("graph");
         graph.setAttribute("edgedefault", edgedefault.toString().toLowerCase());
-        root.appendChild(graph);
+        element.appendChild(graph);
         graphs.add(graph);
         return this;
     }

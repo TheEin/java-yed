@@ -12,7 +12,6 @@ import java.io.File;
 /**
  * Tests {@link Io}.
  *
- * @author Adrian Wilke
  */
 public class IoTest {
 

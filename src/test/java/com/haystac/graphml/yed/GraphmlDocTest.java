@@ -6,8 +6,6 @@ import org.w3c.dom.Element;
 
 /**
  * Tests {@link GraphmlDoc}.
- *
- * @author Adrian Wilke
  */
 public class GraphmlDocTest {
 
@@ -27,10 +25,10 @@ public class GraphmlDocTest {
 
         Assert.assertEquals("Root has one graph", 1, graphmlDoc.getRoot().getChildNodes().getLength());
 
-        Assert.assertEquals("List of graphs has one element", 1, graphmlDoc.graphs.size());
+        Assert.assertEquals("List of graphs has one element", 1, graphmlDoc.getGraphs().size());
 
         Assert.assertEquals("Required graph type is set", "directed",
-            graphmlDoc.graphs.get(0).getAttribute("edgedefault"));
+            graphmlDoc.getGraphs().get(0).getAttribute("edgedefault"));
     }
 
 }

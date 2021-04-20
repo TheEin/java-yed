@@ -2,6 +2,7 @@ package com.haystac.graphml.yed;
 
 import com.haystac.graphml.Defaults;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.XMLConstants;
@@ -14,8 +15,7 @@ import lombok.Setter;
  * <p>
  * Execute {@link #initialize()} first. Afterwards, add nodes and edges.
  *
- * @author Adrian Wilke
- * @see https://www.yworks.com/products/yed
+ * @see <a href="https://www.yworks.com/products/yed">yEd Graph Editor</a>
  */
 public class YedDoc extends GraphmlDoc implements Defaults {
 
@@ -52,7 +52,6 @@ public class YedDoc extends GraphmlDoc implements Defaults {
         if (initialized) {
             throw new RuntimeException("Already initialized. " + YedDoc.class.getName());
         } else {
-            createRoot();
             createStructure();
             addGraph(GraphType.DIRECTED);
             initialized = true;
@@ -78,10 +77,11 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      * @throws RuntimeException if not initialized.
      */
     public String createEdge(String sourceId, String targetId, String label, Integer type) throws RuntimeException {
-
         if (!initialized) {
             throw new RuntimeException("Not initialized. " + YedDoc.class.getName());
         }
+
+        Document document = getDocument();
 
         String edgeId = "e" + edgeCounter++;
 
@@ -150,6 +150,8 @@ public class YedDoc extends GraphmlDoc implements Defaults {
             node = DEFAULT_NODE;
         }
 
+        Document document = getDocument();
+
         Element data = document.createElement("data");
         data.setAttribute("key", ID_NODE_GRAPHICS);
         node.append(document, data);
@@ -168,7 +170,7 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      * Gets the yEd graph element.
      */
     public Element getDefaultGraph() {
-        return graphs.get(0);
+        return getGraphs().get(0);
     }
 
     /**
@@ -179,10 +181,8 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      * Will automatically be called, as overrides {@link GraphmlDoc#createRoot()}.
      */
     @Override
-    public GraphmlDoc createRoot() {
-        if (document == null) {
-            createDocument();
-        }
+    protected Element createRoot() {
+        Document document = getDocument();
 
         Element element = document.createElementNS(
             "http://graphml.graphdrawing.org/xmlns",
@@ -193,9 +193,7 @@ public class YedDoc extends GraphmlDoc implements Defaults {
             "http://www.yworks.com/xml/graphml");
         document.appendChild(element);
 
-        root = element;
-
-        return this;
+        return element;
     }
 
     /**
@@ -203,7 +201,10 @@ public class YedDoc extends GraphmlDoc implements Defaults {
      * <p>
      * Integrated in {@link #initialize()}.
      */
-    public YedDoc createStructure() {
+    protected void createStructure() {
+        Document document = getDocument();
+        Element root = getRoot();
+
         Element edgeGraphics = document.createElement("key");
         edgeGraphics.setAttribute("id", ID_EDGE_GRAPHICS);
         edgeGraphics.setAttribute("for", "edge");
@@ -215,8 +216,6 @@ public class YedDoc extends GraphmlDoc implements Defaults {
         nodeGraphics.setAttribute("for", "node");
         nodeGraphics.setAttribute("yfiles.type", "nodegraphics");
         root.appendChild(nodeGraphics);
-
-        return this;
     }
 
 }

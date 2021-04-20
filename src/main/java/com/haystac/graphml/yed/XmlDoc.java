@@ -15,57 +15,53 @@ import javax.xml.parsers.ParserConfigurationException;
  * The required instances of {@link DocumentBuilderFactory},
  * {@link DocumentBuilder}, and {@link Document} can be modified of sub-classes
  * extending this class.
- *
- * @author Adrian Wilke
  */
 public class XmlDoc {
 
-    protected DocumentBuilderFactory documentBuilderFactory;
+    private DocumentBuilderFactory documentBuilderFactory;
 
-    protected DocumentBuilder documentBuilder;
+    private DocumentBuilder documentBuilder;
 
-    protected Document document;
+    private Document document;
 
     /**
      * Creates default {@link DocumentBuilderFactory}.
      */
-    public XmlDoc createDocumentBuilderFactory() {
-        documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        return this;
+    protected DocumentBuilderFactory createDocumentBuilderFactory() {
+        return DocumentBuilderFactory.newInstance();
     }
 
     /**
      * Creates default {@link DocumentBuilder}.
      */
-    public XmlDoc createDocumentBuilder() {
+    protected DocumentBuilder createDocumentBuilder() {
         if (documentBuilderFactory == null) {
-            createDocumentBuilderFactory();
+            documentBuilderFactory = createDocumentBuilderFactory();
         }
-
         try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            return documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
-        return this;
     }
 
     /**
      * Creates default {@link Document}.
      */
-    public XmlDoc createDocument() {
+    public Document createDocument() {
         if (documentBuilder == null) {
-            createDocumentBuilder();
+            documentBuilder = createDocumentBuilder();
         }
-
-        document = documentBuilder.newDocument();
-        return this;
+        return documentBuilder.newDocument();
     }
 
     /**
      * Gets the XML {@link Document}.
      */
     public Document getDocument() {
+        if (document == null) {
+            document = createDocument();
+        }
         return document;
     }
 }

@@ -7,7 +7,6 @@ import com.haystac.graphml.Color;
  * <p>
  * Uses colors in {@link Color} and {@link Color#getColor(int)}.
  *
- * @author Adrian Wilke
  */
 public class EdgeType {
 

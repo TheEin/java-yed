@@ -7,7 +7,6 @@ import org.w3c.dom.Document;
 /**
  * Tests {@link XmlDoc}.
  *
- * @author Adrian Wilke
  */
 public class XmlDocTest {
 

@@ -26,7 +26,7 @@ public abstract class YedNode<N extends YedNode<N>> extends Node<Document, Eleme
 
     protected void appendFill(Document document, Element parent) {
         Element fill = document.createElement("y:Fill");
-        fill.setAttribute("color", getColor().getCode());
+        fill.setAttribute("color", "#" + getColor().getRgbCode());
         fill.setAttribute("transparent", "false");
         parent.appendChild(fill);
     }
