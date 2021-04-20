@@ -1,4 +1,6 @@
-package com.haystac.javayed;
+package com.haystac.graphml.yed;
+
+import com.haystac.graphml.Color;
 
 /**
  * Sets color based on ID.

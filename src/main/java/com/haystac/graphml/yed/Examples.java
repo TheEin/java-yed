@@ -1,4 +1,7 @@
-package com.haystac.javayed;
+package com.haystac.graphml.yed;
+
+import com.haystac.graphml.Color;
+import com.haystac.graphml.Node;
 
 import java.io.File;
 
@@ -51,11 +54,11 @@ public class Examples {
         yedDoc.setFontStyle("bold");
 
         // Create nodes of different types
-        NodeType hero = new NodeType().color(Color.ORANGE);
+        Node hero = new Node().color(Color.ORANGE);
         String s = yedDoc.createNode("Superman", hero);
         String b = yedDoc.createNode("Batman", hero);
         String h = yedDoc.createNode("Harley Quinn", hero);
-        NodeType robot = new NodeType().color(Color.YELLOW);
+        Node robot = new Node().color(Color.YELLOW);
         String r = yedDoc.createNode("Robocob", robot);
         String t = yedDoc.createNode("T-1000 ", robot);
 

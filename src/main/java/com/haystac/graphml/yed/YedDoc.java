@@ -1,8 +1,13 @@
-package com.haystac.javayed;
+package com.haystac.graphml.yed;
+
+import com.haystac.graphml.Defaults;
 
 import org.w3c.dom.Element;
 
 import javax.xml.XMLConstants;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Creates yEd graph files using extended GraphML.
@@ -12,7 +17,9 @@ import javax.xml.XMLConstants;
  * @author Adrian Wilke
  * @see https://www.yworks.com/products/yed
  */
-public class YedDoc extends GraphmlDoc {
+public class YedDoc extends GraphmlDoc implements Defaults {
+
+    public static final ShapeNode DEFAULT_NODE = new ShapeNode();
 
     public static final String ID_EDGE_GRAPHICS = "d0";
 
@@ -24,10 +31,16 @@ public class YedDoc extends GraphmlDoc {
 
     protected long edgeCounter = 0;
 
+    @Getter
+    @Setter
     private String fontFamily;
 
+    @Getter
+    @Setter
     private int fontSize = -1;
 
+    @Getter
+    @Setter
     private String fontStyle;
 
     /**
@@ -116,90 +129,37 @@ public class YedDoc extends GraphmlDoc {
     }
 
     /**
-     * Creates node and returns the related node ID.
+     * Adds the default node and returns the related node ID.
      *
      * @throws RuntimeException if not initialized.
      */
-    public String createNode(String label) throws RuntimeException {
-        return createNode(label, null);
+    public String addNode(String label) throws RuntimeException {
+        return add(DEFAULT_NODE.defaults(this).label(label));
     }
 
     /**
-     * Creates node and returns the related node ID.
+     * Appends a new node and returns the related node ID.
      *
      * @throws RuntimeException if not initialized.
      */
-    public String createNode(String label, NodeType nodeType) throws RuntimeException {
-
+    public String add(YedNode<?> node) throws RuntimeException {
         if (!initialized) {
             throw new RuntimeException("Not initialized. " + YedDoc.class.getName());
         }
-        if (nodeType == null) {
-            nodeType = NodeType.DEFAULT;
+        if (node == null) {
+            node = DEFAULT_NODE;
         }
-
-        String nodeId = "n" + nodeCounter++;
-
-        Element geometry = document.createElement("y:Geometry");
-        geometry.setAttribute("width", String.valueOf(nodeType.getWidth()));
-        geometry.setAttribute("height", String.valueOf(nodeType.getHeight()));
-
-        Element nodeLabel = document.createElement("y:NodeLabel");
-        nodeLabel.appendChild(document.createTextNode(label));
-        nodeLabel.setAttribute("width", String.valueOf(nodeType.getWidth()));
-        nodeLabel.setAttribute("height", String.valueOf(nodeType.getHeight()));
-        if (fontFamily != null) {
-            nodeLabel.setAttribute("fontFamily", fontFamily);
-        }
-        if (fontSize != -1) {
-            nodeLabel.setAttribute("fontSize", String.valueOf(fontSize));
-        }
-        if (fontStyle != null) {
-            nodeLabel.setAttribute("fontStyle", fontStyle);
-        }
-        String nodeLabelAutoSizePolicy = nodeType.getAutoSizePolicy().getAutoSizePolicy();
-        if (nodeLabelAutoSizePolicy != null) {
-            nodeLabel.setAttribute("autoSizePolicy", nodeLabelAutoSizePolicy);
-        }
-        String nodeLabelConfiguration = nodeType.getConfiguration().getConfiguration();
-        if (nodeLabelConfiguration != null) {
-            nodeLabel.setAttribute("configuration", nodeLabelConfiguration);
-        }
-        if (nodeType.getLeftInset() != 0) {
-            nodeLabel.setAttribute("leftInset", String.valueOf(nodeType.getLeftInset()));
-        }
-        if (nodeType.getRightInset() != 0) {
-            nodeLabel.setAttribute("rightInset", String.valueOf(nodeType.getRightInset()));
-        }
-        if (nodeType.getTopInset() != 0) {
-            nodeLabel.setAttribute("topInset", String.valueOf(nodeType.getTopInset()));
-        }
-        if (nodeType.getBottomInset() != 0) {
-            nodeLabel.setAttribute("bottomInset", String.valueOf(nodeType.getBottomInset()));
-        }
-
-        Element fill = document.createElement("y:Fill");
-        fill.setAttribute("color", nodeType.getColor().getCode());
-        fill.setAttribute("transparent", "false");
-
-        Element shape = document.createElement("y:Shape");
-        shape.setAttribute("type", nodeType.getShape().toString().toLowerCase());
-
-        Element shapeNode = document.createElement("y:ShapeNode");
-        shapeNode.appendChild(geometry);
-        shapeNode.appendChild(nodeLabel);
-        shapeNode.appendChild(fill);
-        shapeNode.appendChild(shape);
 
         Element data = document.createElement("data");
         data.setAttribute("key", ID_NODE_GRAPHICS);
-        data.appendChild(shapeNode);
+        node.append(document, data);
 
-        Element node = document.createElement("node");
-        node.setAttribute("id", nodeId);
-        node.appendChild(data);
+        String nodeId = "n" + nodeCounter++;
+        Element nodeElement = document.createElement("node");
+        nodeElement.setAttribute("id", nodeId);
+        nodeElement.appendChild(data);
 
-        getDefaultGraph().appendChild(node);
+        getDefaultGraph().appendChild(nodeElement);
 
         return nodeId;
     }
@@ -224,8 +184,12 @@ public class YedDoc extends GraphmlDoc {
             createDocument();
         }
 
-        Element element = document.createElementNS("http://graphml.graphdrawing.org/xmlns", "graphml");
-        element.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, XMLConstants.XMLNS_ATTRIBUTE + ":" + "y",
+        Element element = document.createElementNS(
+            "http://graphml.graphdrawing.org/xmlns",
+            "graphml");
+        element.setAttributeNS(
+            XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+            XMLConstants.XMLNS_ATTRIBUTE + ":" + "y",
             "http://www.yworks.com/xml/graphml");
         document.appendChild(element);
 
@@ -253,48 +217,6 @@ public class YedDoc extends GraphmlDoc {
         root.appendChild(nodeGraphics);
 
         return this;
-    }
-
-    /**
-     * Gets default font family for nodes and edges.
-     */
-    public String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * Sets default font family for nodes and edges.
-     */
-    public void setFontFamily(String defaultFontFamily) {
-        this.fontFamily = defaultFontFamily;
-    }
-
-    /**
-     * Gets default font size for nodes and edges.
-     */
-    public int getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Sets default font size for nodes and edges.
-     */
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
-    }
-
-    /**
-     * Gets default font style for nodes and edges.
-     */
-    public String getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets default font style for nodes and edges.
-     */
-    public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
     }
 
 }

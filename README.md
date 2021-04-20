@@ -14,7 +14,7 @@ This is a yEd graph file generator written in Java. It allows to create:
 
 Example code is available in the following files:
 
-- [Examples.java](src/main/java/com/haystac/javayed/Examples.java)
+- [Examples.java](src/main/java/com/haystac/graphml/yed/Examples.java)
 - [YedDocTest.java](src/test/java/de/adrianwilke/javayed/YedDocTest.java)
 - [IoTest.java](src/test/java/de/adrianwilke/javayed/IoTest.java)
 

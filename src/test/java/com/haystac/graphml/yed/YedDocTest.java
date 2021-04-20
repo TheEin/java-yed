@@ -1,4 +1,7 @@
-package com.haystac.javayed;
+package com.haystac.graphml.yed;
+
+import com.haystac.graphml.Color;
+import com.haystac.graphml.Node;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,15 +33,15 @@ public class YedDocTest {
         YedDoc yedDoc = new YedDoc().initialize();
 
         String nodeA = yedDoc.createNode("a simple node");
-        String nodeB = yedDoc.createNode("b type 0", new NodeType().color(Color.ORANGE));
-        String nodeC = yedDoc.createNode("c type 1", new NodeType().color(Color.YELLOW));
-        String nodeD = yedDoc.createNode("d type 2", new NodeType().color(Color.GREEN));
-        String nodeE = yedDoc.createNode("e type 3", new NodeType().color(Color.BLUE));
-        String nodeF = yedDoc.createNode("f type 4", new NodeType().color(Color.PURPLE));
-        String nodeG = yedDoc.createNode("g type 5", new NodeType().color(Color.RED));
-        String nodeH = yedDoc.createNode("h type 6 computed color", new NodeType().color(Color.CYAN));
-        yedDoc.createNode("type 100 computed color", new NodeType().color(Color.MAGENTA));
-        yedDoc.createNode("type 1000 computed default color", new NodeType().color(Color.MAGENTA));
+        String nodeB = yedDoc.createNode("b type 0", new Node().color(Color.ORANGE));
+        String nodeC = yedDoc.createNode("c type 1", new Node().color(Color.YELLOW));
+        String nodeD = yedDoc.createNode("d type 2", new Node().color(Color.GREEN));
+        String nodeE = yedDoc.createNode("e type 3", new Node().color(Color.BLUE));
+        String nodeF = yedDoc.createNode("f type 4", new Node().color(Color.PURPLE));
+        String nodeG = yedDoc.createNode("g type 5", new Node().color(Color.RED));
+        String nodeH = yedDoc.createNode("h type 6 computed color", new Node().color(Color.CYAN));
+        yedDoc.createNode("type 100 computed color", new Node().color(Color.MAGENTA));
+        yedDoc.createNode("type 1000 computed default color", new Node().color(Color.MAGENTA));
 
         yedDoc.createEdge(nodeA, nodeB);
         yedDoc.createEdge(nodeA, nodeB, "a to b no type", null);
